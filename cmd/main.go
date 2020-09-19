@@ -22,19 +22,22 @@ func init() {
 }
 
 func main() {
-	dev, _ := gonetmiko.NewDevice(
+	dev, err := gonetmiko.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.Aruba,
+		gonetmiko.DType.Dell,
 	)
-	err := dev.Connect(10)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	err = dev.Connect(10)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("show ap database long")
+	res, err := dev.SendCmd("show power inline | include on|On")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
@@ -111,9 +114,9 @@ func ios() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	_, err = dev.SendCmd("show cdp neighbor")
+	res, err := dev.SendCmd("show cdp neighbor")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-	// fmt.Println(res)
+	fmt.Println(res)
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/drkchiloll/gonetmiko/universal"
 	"github.com/drkchiloll/gonetmiko/vendors/aruba"
 	"github.com/drkchiloll/gonetmiko/vendors/cisco"
+	"github.com/drkchiloll/gonetmiko/vendors/dell"
 	"github.com/drkchiloll/gonetmiko/vendors/x86"
 )
 
@@ -28,7 +29,7 @@ var DType = dType{
 	CiscoIOSXE:  "cisco_iosxe",
 	CiscoAireos: "cisco_aireos",
 	Aruba:       "arubaos_ssh",
-	Dell:        "dell",
+	Dell:        "dell_powerconnect",
 	X86:         "x86",
 }
 
@@ -40,6 +41,8 @@ func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (univ
 	switch {
 	case strings.Contains(string(deviceType), "cisco"):
 		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
+	case strings.Contains(string(deviceType), "dell"):
+		device, err = dell.NewDevice(conn, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "aruba"):
 		device, err = aruba.NewDevice(conn, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "x86"):

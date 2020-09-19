@@ -3,6 +3,7 @@ package cisco
 import (
 	"github.com/drkchiloll/gonetmiko/driver"
 	"github.com/drkchiloll/gonetmiko/types"
+	"golang.org/x/crypto/ssh"
 )
 
 // IOS ...
@@ -27,5 +28,12 @@ func (d *IOS) SendCmd(cmd string) (string, error) {
 	return d.base.SendCmd(cmd)
 }
 
-// ExecEnable ...
-func (d *IOS) ExecEnable() {}
+// NewClientConfig ...
+func (d *IOS) NewClientConfig() *ssh.ClientConfig {
+	return nil
+}
+
+// NewClient ...
+func (d *IOS) NewClient() (*ssh.Client, error) {
+	return nil, nil
+}

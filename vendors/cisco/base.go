@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/drkchiloll/gonetmiko/driver"
+	"golang.org/x/crypto/ssh"
 )
 
 // BaseDevice represent a generic cisco network object
@@ -42,5 +43,15 @@ func (d *BaseDevice) sessionPrep() error {
 	if re.MatchString(out) {
 		d.Driver.ExecEnable(d.EnablePass)
 	}
+	return nil
+}
+
+// NewClient ...
+func (d *BaseDevice) NewClient() (*ssh.Client, error) {
+	return nil, nil
+}
+
+// NewClientConfig ...
+func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 	return nil
 }

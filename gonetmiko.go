@@ -30,8 +30,8 @@ type DeviceType string
 type dType struct {
 	CiscoIOS    DeviceType
 	CiscoIOSXE  DeviceType
-	Aruba       DeviceType
 	CiscoAireos DeviceType
+	Aruba       DeviceType
 	Dell        DeviceType
 	X86         DeviceType
 }
@@ -40,8 +40,8 @@ type dType struct {
 var DType = dType{
 	CiscoIOS:    "cisco_ios",
 	CiscoIOSXE:  "cisco_iosxe",
+	CiscoAireos: "cisco_aireos",
 	Aruba:       "aruba",
-	CiscoAireos: "cisco_wlc",
 	Dell:        "dell",
 	X86:         "x86",
 }

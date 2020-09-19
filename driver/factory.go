@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/drkchiloll/gonetmiko/conn"
+	"golang.org/x/crypto/ssh"
 )
 
 // Factory implements the Driver Interface
@@ -13,6 +14,8 @@ type Factory interface {
 	SendCmd(cmd, regex string, dur time.Duration) (string, error)
 	ReadUntil(regex string) (string, error)
 	ExecEnable(enablePass string)
+	NewClientConfig() *ssh.ClientConfig
+	NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error)
 }
 
 // NewDriver ...

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/drkchiloll/gonetmiko/conn"
+	"golang.org/x/crypto/ssh"
 )
 
 // Driver ...
@@ -83,4 +84,14 @@ func (d *Driver) read(regex string, buf chan *string, stop chan struct{}) {
 // ExecEnable ...
 func (d *Driver) ExecEnable(pass string) {
 	d.Connection.ExecEnable(pass)
+}
+
+// NewClientConfig ...
+func (d *Driver) NewClientConfig() *ssh.ClientConfig {
+	return d.Connection.NewClientConfig()
+}
+
+// NewClient ...
+func (d *Driver) NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error) {
+	return d.Connection.NewClient(cfg)
 }

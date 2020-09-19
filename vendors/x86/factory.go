@@ -7,7 +7,7 @@ import (
 )
 
 // NewDevice instantiates a new X86 for SFTP Mainly
-func NewDevice(cl client.Connectioner, deviceType string) (types.X86, error) {
+func NewDevice(cl client.Connectioner, deviceType string) (types.Device, error) {
 	driver := driver.NewDriver(cl)
 	base := BaseDevice{
 		Driver:       driver,

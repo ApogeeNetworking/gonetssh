@@ -9,7 +9,7 @@ import (
 // PizzaBox ...
 type PizzaBox struct {
 	Driver       driver.Factory
-	base         types.X86
+	base         types.Device
 	SSHClientCfg *ssh.ClientConfig
 }
 

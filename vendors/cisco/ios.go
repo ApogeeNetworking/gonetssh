@@ -14,26 +14,26 @@ type IOS struct {
 }
 
 // Connect ...
-func (d *IOS) Connect(retries int) error {
-	return d.base.Connect(retries)
+func (dev *IOS) Connect(retries int) error {
+	return dev.base.Connect(retries)
 }
 
 // Disconnect ...
-func (d *IOS) Disconnect() {
-	d.base.Disconnect()
+func (dev *IOS) Disconnect() {
+	dev.base.Disconnect()
 }
 
 // SendCmd ...
-func (d *IOS) SendCmd(cmd string) (string, error) {
-	return d.base.SendCmd(cmd)
+func (dev *IOS) SendCmd(cmd string) (string, error) {
+	return dev.base.SendCmd(cmd)
 }
 
 // NewClientConfig ...
-func (d *IOS) NewClientConfig() *ssh.ClientConfig {
+func (dev IOS) NewClientConfig() *ssh.ClientConfig {
 	return nil
 }
 
 // NewClient ...
-func (d *IOS) NewClient() (*ssh.Client, error) {
+func (dev IOS) NewClient() (*ssh.Client, error) {
 	return nil, nil
 }

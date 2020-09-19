@@ -13,9 +13,9 @@ import (
 type BaseDevice struct {
 	Driver     driver.Factory
 	DeviceType string
-	Prompt     string
+	prompt     string
 	EnablePass string
-	Delay      time.Duration
+	delay      time.Duration
 }
 
 // Connect ...
@@ -23,7 +23,18 @@ func (d *BaseDevice) Connect(retries int) error {
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
-	return d.sessionPrep()
+	switch d.DeviceType {
+	case "cisco_ios":
+		d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
+		d.delay = 250 * time.Millisecond
+		return d.iosPrep()
+	case "cisco_aireos":
+		d.prompt = `\s>.?$`
+		d.delay = 500 * time.Millisecond
+		return d.aireosPrep()
+	default:
+		return nil
+	}
 }
 
 // Disconnect ...
@@ -33,18 +44,26 @@ func (d *BaseDevice) Disconnect() {
 
 // SendCmd ...
 func (d *BaseDevice) SendCmd(cmd string) (string, error) {
-	return d.Driver.SendCmd(cmd, d.Prompt, d.Delay)
+	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
 }
 
-func (d *BaseDevice) sessionPrep() error {
+// iosPrep ...
+func (d *BaseDevice) iosPrep() error {
 	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session
-	out, _ := d.Driver.SendCmd("terminal len 0", d.Prompt, d.Delay)
+	out, _ := d.SendCmd("terminal len 0")
 	// Check whether or not the Prompt is in Exec Mode #
 	re := regexp.MustCompile(`[[:alnum:]]>.?$`)
 	if re.MatchString(out) {
 		fmt.Println("wasn't in enable mode")
 		d.Driver.ExecEnable(d.EnablePass)
 	}
+	return nil
+}
+
+func (d *BaseDevice) aireosPrep() error {
+	out, _ := d.SendCmd("config paging disable")
+	fmt.Println(out)
+
 	return nil
 }
 

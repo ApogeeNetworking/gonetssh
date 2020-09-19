@@ -2,7 +2,6 @@ package cisco
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/drkchiloll/gonetmiko/client"
 	"github.com/drkchiloll/gonetmiko/driver"
@@ -11,20 +10,21 @@ import (
 
 // NewDevice ...
 func NewDevice(client client.Connectioner, deviceType, enablePass string) (types.Device, error) {
-	prompt := "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
 	driver := driver.NewDriver(client)
 	base := BaseDevice{
 		Driver:     driver,
-		Prompt:     prompt,
 		DeviceType: deviceType,
-		Delay:      250 * time.Millisecond,
 		EnablePass: enablePass,
 	}
 	switch deviceType {
 	case "cisco_ios":
 		return &IOS{
 			Driver: driver,
-			Prompt: prompt,
+			base:   &base,
+		}, nil
+	case "cisco_aireos":
+		return &AireOS{
+			Driver: driver,
 			base:   &base,
 		}, nil
 	default:

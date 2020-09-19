@@ -27,14 +27,14 @@ func main() {
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.CiscoIOS,
+		gonetmiko.DType.CiscoAireos,
 	)
 	err := dev.Connect(10)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("show cdp neighbor")
+	res, err := dev.SendCmd("show ap inventory all")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
@@ -91,9 +91,9 @@ func ios() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("show cdp neighbor")
+	_, err = dev.SendCmd("show cdp neighbor")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-	fmt.Println(res)
+	// fmt.Println(res)
 }

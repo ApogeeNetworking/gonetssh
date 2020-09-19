@@ -6,6 +6,7 @@ import (
 	"github.com/drkchiloll/gonetmiko/conn"
 	"github.com/drkchiloll/gonetmiko/types"
 	"github.com/drkchiloll/gonetmiko/vendors/cisco"
+	"github.com/drkchiloll/gonetmiko/vendors/x86"
 )
 
 // NewDevice ...
@@ -17,6 +18,8 @@ func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (type
 	switch {
 	case strings.Contains(string(deviceType), "cisco"):
 		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
+	case strings.Contains(string(deviceType), "x86"):
+		device, err = x86.NewDevice(conn, string(deviceType))
 	}
 	return device, nil
 }

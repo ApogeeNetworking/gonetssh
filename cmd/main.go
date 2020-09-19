@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 
 	"github.com/drkchiloll/gonetmiko"
+	"github.com/pkg/sftp"
 	"github.com/subosito/gotenv"
 )
 
@@ -19,7 +21,46 @@ func init() {
 	enablePass = os.Getenv("ENABLE_PW")
 }
 
-func main() {
+func main() {}
+
+func sftpUploadFileExample() {
+	dev, _ := gonetmiko.NewDevice(
+		sshHost,
+		sshUser,
+		sshPass,
+		enablePass,
+		gonetmiko.DType.X86,
+	)
+	dev.NewClientConfig()
+	sshClient, err := dev.NewClient()
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	scp, err := sftp.NewClient(sshClient)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	defer func() {
+		scp.Close()
+		dev.Disconnect()
+	}()
+	dstFile, err := scp.Create("gonetmiko.go")
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	defer dstFile.Close()
+	srcFile, err := os.Open("gonetmiko.go")
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	bytes, err := io.Copy(dstFile, srcFile)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	fmt.Printf("%d bytes copied\n", bytes)
+}
+
+func ios() {
 	dev, _ := gonetmiko.NewDevice(
 		sshHost,
 		sshUser,

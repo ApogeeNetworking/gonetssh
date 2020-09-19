@@ -1,14 +1,14 @@
 package x86
 
 import (
-	"github.com/drkchiloll/gonetmiko/conn"
+	"github.com/drkchiloll/gonetmiko/client"
 	"github.com/drkchiloll/gonetmiko/driver"
 	"github.com/drkchiloll/gonetmiko/types"
 )
 
 // NewDevice instantiates a new X86 for SFTP Mainly
-func NewDevice(conn conn.Connectioner, deviceType string) (types.X86, error) {
-	driver := driver.NewDriver(conn)
+func NewDevice(cl client.Connectioner, deviceType string) (types.X86, error) {
+	driver := driver.NewDriver(cl)
 	base := BaseDevice{
 		Driver:       driver,
 		DeviceType:   deviceType,

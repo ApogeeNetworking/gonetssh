@@ -3,7 +3,7 @@ package driver
 import (
 	"time"
 
-	"github.com/drkchiloll/gonetmiko/conn"
+	"github.com/drkchiloll/gonetmiko/client"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -19,6 +19,6 @@ type Factory interface {
 }
 
 // NewDriver ...
-func NewDriver(conn conn.Connectioner) Factory {
+func NewDriver(conn client.Connectioner) Factory {
 	return &Driver{Connection: conn}
 }

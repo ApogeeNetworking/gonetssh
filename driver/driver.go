@@ -5,13 +5,13 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/drkchiloll/gonetmiko/conn"
+	"github.com/drkchiloll/gonetmiko/client"
 	"golang.org/x/crypto/ssh"
 )
 
 // Driver ...
 type Driver struct {
-	Connection conn.Connectioner
+	Connection client.Connectioner
 }
 
 // Connect ...

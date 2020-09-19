@@ -3,7 +3,7 @@ package gonetmiko
 import (
 	"strings"
 
-	"github.com/drkchiloll/gonetmiko/conn"
+	"github.com/drkchiloll/gonetmiko/client"
 	"github.com/drkchiloll/gonetmiko/types"
 	"github.com/drkchiloll/gonetmiko/vendors/cisco"
 	"github.com/drkchiloll/gonetmiko/vendors/x86"
@@ -12,14 +12,14 @@ import (
 // NewDevice ...
 func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (types.Device, error) {
 	var device types.Device
-	conn, err := conn.NewConnection(host, user, pass)
+	client, err := client.NewConnection(host, user, pass)
 	if err != nil {
 	}
 	switch {
 	case strings.Contains(string(deviceType), "cisco"):
-		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
+		device, err = cisco.NewDevice(client, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "x86"):
-		device, err = x86.NewDevice(conn, string(deviceType))
+		device, err = x86.NewDevice(client, string(deviceType))
 	}
 	return device, nil
 }

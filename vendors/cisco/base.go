@@ -22,7 +22,6 @@ func (d *BaseDevice) Connect(retries int) error {
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
-	d.Prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
 	return d.sessionPrep()
 }
 

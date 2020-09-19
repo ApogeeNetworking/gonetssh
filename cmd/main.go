@@ -21,7 +21,25 @@ func init() {
 	enablePass = os.Getenv("ENABLE_PW")
 }
 
-func main() {}
+func main() {
+	dev, _ := gonetmiko.NewDevice(
+		sshHost,
+		sshUser,
+		sshPass,
+		enablePass,
+		gonetmiko.DType.CiscoIOS,
+	)
+	err := dev.Connect(10)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	defer dev.Disconnect()
+	res, err := dev.SendCmd("show cdp neighbor")
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	fmt.Println(res)
+}
 
 func sftpUploadFileExample() {
 	dev, _ := gonetmiko.NewDevice(

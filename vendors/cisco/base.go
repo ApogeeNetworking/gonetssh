@@ -1,6 +1,7 @@
 package cisco
 
 import (
+	"fmt"
 	"regexp"
 	"time"
 
@@ -36,10 +37,12 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 }
 
 func (d *BaseDevice) sessionPrep() error {
+	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session
+	out, _ := d.Driver.SendCmd("terminal len 0", d.Prompt, d.Delay)
 	// Check whether or not the Prompt is in Exec Mode #
 	re := regexp.MustCompile(`[[:alnum:]]>.?$`)
-	out, _ := d.Driver.SendCmd("terminal len 0", d.Prompt, d.Delay)
 	if re.MatchString(out) {
+		fmt.Println("wasn't in enable mode")
 		d.Driver.ExecEnable(d.EnablePass)
 	}
 	return nil

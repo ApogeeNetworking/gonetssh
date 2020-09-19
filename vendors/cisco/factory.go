@@ -17,7 +17,7 @@ func NewDevice(client client.Connectioner, deviceType, enablePass string) (types
 		Driver:     driver,
 		Prompt:     prompt,
 		DeviceType: deviceType,
-		Delay:      500 * time.Millisecond,
+		Delay:      250 * time.Millisecond,
 		EnablePass: enablePass,
 	}
 	switch deviceType {

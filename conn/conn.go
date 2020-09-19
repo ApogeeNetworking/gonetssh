@@ -1,5 +1,7 @@
 package conn
 
+import "golang.org/x/crypto/ssh"
+
 // Connectioner refers to the Interface Implemented by conn.SSH
 type Connectioner interface {
 	Connect(retries int) error
@@ -7,6 +9,8 @@ type Connectioner interface {
 	Read() (string, error)
 	Write(cmd string) int
 	ExecEnable(pass string)
+	NewClientConfig() *ssh.ClientConfig
+	NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error)
 }
 
 // NewConnection instantiate an SSHConn that implements Connection

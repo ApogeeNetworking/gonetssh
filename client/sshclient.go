@@ -25,6 +25,7 @@ var (
 	sshKeyExchanges = []string{
 		"diffie-hellman-group-exchange-sha1",
 		"diffie-hellman-group1-sha1",
+		"diffie-hellman-group14-sha1", // Aruba SSH
 		"ecdh-sha2-nistp256",
 		"ecdh-sha2-nistp384",
 		"ecdh-sha2-nistp521",

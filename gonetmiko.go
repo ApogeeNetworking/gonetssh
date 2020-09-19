@@ -4,20 +4,23 @@ import (
 	"strings"
 
 	"github.com/drkchiloll/gonetmiko/client"
-	"github.com/drkchiloll/gonetmiko/types"
+	"github.com/drkchiloll/gonetmiko/universal"
+	"github.com/drkchiloll/gonetmiko/vendors/aruba"
 	"github.com/drkchiloll/gonetmiko/vendors/cisco"
 	"github.com/drkchiloll/gonetmiko/vendors/x86"
 )
 
 // NewDevice ...
-func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (types.Device, error) {
-	var device types.Device
+func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (universal.Device, error) {
+	var device universal.Device
 	client, err := client.NewConnection(host, user, pass)
 	if err != nil {
 	}
 	switch {
 	case strings.Contains(string(deviceType), "cisco"):
 		device, err = cisco.NewDevice(client, string(deviceType), enablePass)
+	case strings.Contains(string(deviceType), "aruba"):
+		device, err = aruba.NewDevice(client, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "x86"):
 		device, err = x86.NewDevice(client, string(deviceType))
 	}
@@ -41,7 +44,7 @@ var DType = dType{
 	CiscoIOS:    "cisco_ios",
 	CiscoIOSXE:  "cisco_iosxe",
 	CiscoAireos: "cisco_aireos",
-	Aruba:       "aruba",
+	Aruba:       "arubaos_ssh",
 	Dell:        "dell",
 	X86:         "x86",
 }

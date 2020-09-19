@@ -1,8 +1,8 @@
-package types
+package universal
 
 import "golang.org/x/crypto/ssh"
 
-// Device ...
+// Device is the interface all Devices will implement
 type Device interface {
 	Connect(retries int) error
 	Disconnect()

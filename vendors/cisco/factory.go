@@ -5,11 +5,11 @@ import (
 
 	"github.com/drkchiloll/gonetmiko/client"
 	"github.com/drkchiloll/gonetmiko/driver"
-	"github.com/drkchiloll/gonetmiko/types"
+	"github.com/drkchiloll/gonetmiko/universal"
 )
 
 // NewDevice ...
-func NewDevice(client client.Connectioner, deviceType, enablePass string) (types.Device, error) {
+func NewDevice(client client.Connectioner, deviceType, enablePass string) (universal.Device, error) {
 	driver := driver.NewDriver(client)
 	base := BaseDevice{
 		Driver:     driver,

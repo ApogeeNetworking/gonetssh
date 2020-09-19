@@ -2,7 +2,7 @@ package cisco
 
 import (
 	"github.com/drkchiloll/gonetmiko/driver"
-	"github.com/drkchiloll/gonetmiko/types"
+	"github.com/drkchiloll/gonetmiko/universal"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -10,7 +10,7 @@ import (
 type IOS struct {
 	Driver driver.Factory
 	Prompt string
-	base   types.Device
+	base   universal.Device
 }
 
 // Connect ...

@@ -2,14 +2,14 @@ package x86
 
 import (
 	"github.com/drkchiloll/gonetmiko/driver"
-	"github.com/drkchiloll/gonetmiko/types"
+	"github.com/drkchiloll/gonetmiko/universal"
 	"golang.org/x/crypto/ssh"
 )
 
 // PizzaBox ...
 type PizzaBox struct {
 	Driver       driver.Factory
-	base         types.Device
+	base         universal.Device
 	SSHClientCfg *ssh.ClientConfig
 }
 

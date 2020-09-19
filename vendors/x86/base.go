@@ -1,7 +1,7 @@
 package x86
 
 import (
-	"github.com/drkchiloll/gonetmiko/driver"
+	"github.com/drkchiloll/gonetssh/driver"
 	"golang.org/x/crypto/ssh"
 )
 

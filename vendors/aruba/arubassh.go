@@ -1,8 +1,8 @@
 package aruba
 
 import (
-	"github.com/drkchiloll/gonetmiko/driver"
-	"github.com/drkchiloll/gonetmiko/universal"
+	"github.com/drkchiloll/gonetssh/driver"
+	"github.com/drkchiloll/gonetssh/universal"
 	"golang.org/x/crypto/ssh"
 )
 

@@ -3,7 +3,7 @@ package dell
 import (
 	"time"
 
-	"github.com/drkchiloll/gonetmiko/driver"
+	"github.com/drkchiloll/gonetssh/driver"
 	"golang.org/x/crypto/ssh"
 )
 

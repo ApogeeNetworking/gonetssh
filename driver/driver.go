@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/drkchiloll/gonetmiko/client"
+	"github.com/drkchiloll/gonetssh/client"
 	"golang.org/x/crypto/ssh"
 )
 

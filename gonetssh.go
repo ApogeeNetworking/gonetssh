@@ -1,14 +1,14 @@
-package gonetmiko
+package gonetssh
 
 import (
 	"strings"
 
-	"github.com/drkchiloll/gonetmiko/client"
-	"github.com/drkchiloll/gonetmiko/universal"
-	"github.com/drkchiloll/gonetmiko/vendors/aruba"
-	"github.com/drkchiloll/gonetmiko/vendors/cisco"
-	"github.com/drkchiloll/gonetmiko/vendors/dell"
-	"github.com/drkchiloll/gonetmiko/vendors/x86"
+	"github.com/drkchiloll/gonetssh/client"
+	"github.com/drkchiloll/gonetssh/universal"
+	"github.com/drkchiloll/gonetssh/vendors/aruba"
+	"github.com/drkchiloll/gonetssh/vendors/cisco"
+	"github.com/drkchiloll/gonetssh/vendors/dell"
+	"github.com/drkchiloll/gonetssh/vendors/x86"
 )
 
 // DeviceType ...

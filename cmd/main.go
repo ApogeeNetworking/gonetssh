@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/drkchiloll/gonetmiko"
+	"github.com/drkchiloll/gonetssh"
 	"github.com/pkg/sftp"
 	"github.com/subosito/gotenv"
 )
@@ -22,12 +22,12 @@ func init() {
 }
 
 func main() {
-	dev, err := gonetmiko.NewDevice(
+	dev, err := gonetssh.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.Dell,
+		gonetssh.DType.Dell,
 	)
 	if err != nil {
 		log.Fatalf("%v", err)
@@ -37,7 +37,7 @@ func main() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("show power inline | include on|On")
+	res, err := dev.SendCmd("sh fiber-ports optical-transceiver | incl /")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
@@ -45,12 +45,12 @@ func main() {
 }
 
 func aireOS() {
-	dev, _ := gonetmiko.NewDevice(
+	dev, _ := gonetssh.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.CiscoAireos,
+		gonetssh.DType.CiscoAireos,
 	)
 	err := dev.Connect(10)
 	if err != nil {
@@ -65,12 +65,12 @@ func aireOS() {
 }
 
 func sftpUploadFileExample() {
-	dev, _ := gonetmiko.NewDevice(
+	dev, _ := gonetssh.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.X86,
+		gonetssh.DType.X86,
 	)
 	dev.NewClientConfig()
 	sshClient, err := dev.NewClient()
@@ -85,12 +85,12 @@ func sftpUploadFileExample() {
 		scp.Close()
 		dev.Disconnect()
 	}()
-	dstFile, err := scp.Create("gonetmiko.go")
+	dstFile, err := scp.Create("gonetssh.go")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
 	defer dstFile.Close()
-	srcFile, err := os.Open("gonetmiko.go")
+	srcFile, err := os.Open("gonetssh.go")
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
@@ -102,12 +102,12 @@ func sftpUploadFileExample() {
 }
 
 func ios() {
-	dev, _ := gonetmiko.NewDevice(
+	dev, _ := gonetssh.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetmiko.DType.CiscoIOS,
+		gonetssh.DType.CiscoIOS,
 	)
 	err := dev.Connect(10)
 	if err != nil {

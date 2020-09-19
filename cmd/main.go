@@ -27,6 +27,26 @@ func main() {
 		sshUser,
 		sshPass,
 		enablePass,
+		gonetmiko.DType.Aruba,
+	)
+	err := dev.Connect(10)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	defer dev.Disconnect()
+	res, err := dev.SendCmd("show ap database long")
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	fmt.Println(res)
+}
+
+func aireOS() {
+	dev, _ := gonetmiko.NewDevice(
+		sshHost,
+		sshUser,
+		sshPass,
+		enablePass,
 		gonetmiko.DType.CiscoAireos,
 	)
 	err := dev.Connect(10)

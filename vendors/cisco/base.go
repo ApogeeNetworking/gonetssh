@@ -49,13 +49,24 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 
 // SendConfig ...
 func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	// Prompt used for any Configure MODE
 	prompt := "[[:alnum:]]\\(\\S+\\)#"
-	for _, cmd := range cmds {
-		output, _ := d.Driver.SendCmd(cmd, prompt, d.delay)
-		fmt.Println(output)
+	// Pre-pend Relevant Configure Terminal and Exit Commands
+	preCmds := []string{"configure terminal"}
+	// End the Configuration MODE (CMD)
+	cmds = append(cmds, "end")
+	preCmds = append(preCmds, cmds...)
+	var output string
+	for _, cmd := range preCmds {
+		switch cmd {
+		case "end":
+			prompt = d.prompt
+		}
+		out, _ := d.Driver.SendCmd(cmd, prompt, d.delay)
+		output += out
+		time.Sleep(d.delay)
 	}
-	// return d.Driver.SendCmd(cmd, prompt, d.delay)
-	return "", nil
+	return output, nil
 }
 
 // iosPrep ...

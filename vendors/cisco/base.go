@@ -48,8 +48,14 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 }
 
 // SendConfig ...
-func (d *BaseDevice) SendConfig(cmd string) (string, error) {
-	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	prompt := "[[:alnum:]]\\(\\S+\\)#"
+	for _, cmd := range cmds {
+		output, _ := d.Driver.SendCmd(cmd, prompt, d.delay)
+		fmt.Println(output)
+	}
+	// return d.Driver.SendCmd(cmd, prompt, d.delay)
+	return "", nil
 }
 
 // iosPrep ...

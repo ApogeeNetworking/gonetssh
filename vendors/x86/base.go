@@ -41,6 +41,7 @@ func (d *BaseDevice) NewClient() (*ssh.Client, error) {
 }
 
 // SendConfig ...
-func (d *BaseDevice) SendConfig(cmd string) (string, error) {
+func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	// THIS IS NOT IMPLEMENTED IN X86 SYS FOR OBV REASONS
 	return "", nil
 }

@@ -59,6 +59,7 @@ func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 }
 
 // SendConfig ...
-func (d *BaseDevice) SendConfig(cmd string) (string, error) {
-	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+func (d *BaseDevice) SendConfig(cmd []string) (string, error) {
+	// NOT IMPLEMENTED FOR DELL SWITCHES ET AL
+	return "", nil
 }

@@ -39,6 +39,6 @@ func (d *AireOS) NewClient() (*ssh.Client, error) {
 }
 
 // SendConfig ...
-func (d *AireOS) SendConfig(cmd string) (string, error) {
-	return d.base.SendConfig(cmd)
+func (d *AireOS) SendConfig(cmds []string) (string, error) {
+	return d.base.SendConfig(cmds)
 }

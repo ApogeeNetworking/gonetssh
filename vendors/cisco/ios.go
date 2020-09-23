@@ -39,6 +39,6 @@ func (dev IOS) NewClient() (*ssh.Client, error) {
 }
 
 // SendConfig ...
-func (dev *IOS) SendConfig(cmd string) (string, error) {
-	return dev.base.SendConfig(cmd)
+func (dev *IOS) SendConfig(cmds []string) (string, error) {
+	return dev.base.SendConfig(cmds)
 }

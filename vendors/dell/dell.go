@@ -39,6 +39,6 @@ func (dev PowerConnect) NewClient() (*ssh.Client, error) {
 }
 
 // SendConfig ...
-func (dev *PowerConnect) SendConfig(cmd string) (string, error) {
-	return dev.base.SendConfig(cmd)
+func (dev *PowerConnect) SendConfig(cmds []string) (string, error) {
+	return dev.base.SendConfig(cmds)
 }

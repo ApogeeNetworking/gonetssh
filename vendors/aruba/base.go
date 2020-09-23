@@ -38,8 +38,8 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 }
 
 // SendConfig ...
-func (d *BaseDevice) SendConfig(cmd string) (string, error) {
-	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	return "", nil
 }
 
 // iosPrep ...

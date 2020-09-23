@@ -39,3 +39,8 @@ func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 func (d *BaseDevice) NewClient() (*ssh.Client, error) {
 	return d.Driver.NewClient(d.SSHClientCfg)
 }
+
+// SendConfig ...
+func (d *BaseDevice) SendConfig(cmd string) (string, error) {
+	return "", nil
+}

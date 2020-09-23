@@ -7,6 +7,7 @@ type Device interface {
 	Connect(retries int) error
 	Disconnect()
 	SendCmd(cmd string) (string, error)
+	SendConfig(cmd string) (string, error)
 	NewClientConfig() *ssh.ClientConfig
 	NewClient() (*ssh.Client, error)
 }

@@ -15,22 +15,22 @@ import (
 type DeviceType string
 
 type dType struct {
-	CiscoIOS    DeviceType
-	CiscoIOSXE  DeviceType
-	CiscoAireos DeviceType
-	Aruba       DeviceType
-	Dell        DeviceType
-	X86         DeviceType
+	CiscoIOS         DeviceType
+	CiscoIOSXE       DeviceType
+	CiscoAireos      DeviceType
+	Aruba            DeviceType
+	DellPowerConnect DeviceType
+	X86              DeviceType
 }
 
 // DType represents a driverType DeviceDriver ENUM
 var DType = dType{
-	CiscoIOS:    "cisco_ios",
-	CiscoIOSXE:  "cisco_iosxe",
-	CiscoAireos: "cisco_aireos",
-	Aruba:       "arubaos_ssh",
-	Dell:        "dell_powerconnect",
-	X86:         "x86",
+	CiscoIOS:         "cisco_ios",
+	CiscoIOSXE:       "cisco_iosxe",
+	CiscoAireos:      "cisco_aireos",
+	Aruba:            "arubaos_ssh",
+	DellPowerConnect: "dell_powerconnect",
+	X86:              "x86",
 }
 
 // NewDevice ...

@@ -37,3 +37,8 @@ func (dev SSH) NewClientConfig() *ssh.ClientConfig {
 func (dev SSH) NewClient() (*ssh.Client, error) {
 	return nil, nil
 }
+
+// SendConfig ...
+func (dev *SSH) SendConfig(cmd string) (string, error) {
+	return dev.base.SendConfig(cmd)
+}

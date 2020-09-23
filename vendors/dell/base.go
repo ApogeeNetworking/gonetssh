@@ -57,3 +57,8 @@ func (d *BaseDevice) NewClient() (*ssh.Client, error) {
 func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 	return nil
 }
+
+// SendConfig ...
+func (d *BaseDevice) SendConfig(cmd string) (string, error) {
+	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+}

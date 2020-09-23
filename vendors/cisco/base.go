@@ -47,6 +47,11 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
 }
 
+// SendConfig ...
+func (d *BaseDevice) SendConfig(cmd string) (string, error) {
+	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+}
+
 // iosPrep ...
 func (d *BaseDevice) iosPrep() error {
 	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session

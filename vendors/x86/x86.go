@@ -37,3 +37,8 @@ func (d *PizzaBox) NewClient() (*ssh.Client, error) {
 func (d *PizzaBox) NewClientConfig() *ssh.ClientConfig {
 	return d.base.NewClientConfig()
 }
+
+// SendConfig ...
+func (d *PizzaBox) SendConfig(cmd string) (string, error) {
+	return d.base.SendConfig(cmd)
+}

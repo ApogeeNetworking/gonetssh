@@ -37,6 +37,11 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
 }
 
+// SendConfig ...
+func (d *BaseDevice) SendConfig(cmd string) (string, error) {
+	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
+}
+
 // iosPrep ...
 func (d *BaseDevice) sessionPrep() error {
 	d.Driver.ExecEnable(d.EnablePass)

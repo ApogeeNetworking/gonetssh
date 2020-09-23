@@ -27,9 +27,10 @@ func main() {
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetssh.DType.Dell,
+		gonetssh.DType.CiscoIOS,
 	)
 	if err != nil {
+		// Device Type Not Supported
 		log.Fatalf("%v", err)
 	}
 	err = dev.Connect(10)
@@ -37,10 +38,7 @@ func main() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("sh fiber-ports optical-transceiver | incl /")
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
+	res, _ := dev.SendCmd("show ap summary | include core")
 	fmt.Println(res)
 }
 

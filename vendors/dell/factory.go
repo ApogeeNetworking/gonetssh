@@ -17,8 +17,8 @@ func NewDevice(conn client.Connectioner, deviceType, enablePass string) (univers
 		EnablePass: enablePass,
 	}
 	switch deviceType {
-	case "dell_powerconnect":
-		return &PowerConnect{
+	case "dell_os6":
+		return &OS6{
 			Driver: driver,
 			base:   &base,
 		}, nil

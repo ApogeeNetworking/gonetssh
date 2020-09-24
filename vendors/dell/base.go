@@ -1,6 +1,8 @@
 package dell
 
 import (
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
@@ -21,9 +23,9 @@ func (d *BaseDevice) Connect(retries int) error {
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
+	d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
 	switch d.DeviceType {
-	case "dell_powerconnect":
-		d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
+	case "dell_os6":
 		d.delay = 2000 * time.Millisecond
 		return d.pcPrep()
 	default:
@@ -44,7 +46,12 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 // iosPrep ...
 func (d *BaseDevice) pcPrep() error {
 	// Set the terminal length for the session
-	d.SendCmd("terminal len 0")
+	out, _ := d.SendCmd("terminal len 0")
+	if strings.Contains(out, "Unrecognized") {
+		// For PowerConnect 3000 Series Switches
+		out, _ := d.SendCmd("terminal datadump")
+		fmt.Println(out)
+	}
 	return nil
 }
 

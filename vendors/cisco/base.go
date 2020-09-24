@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/drkchiloll/gonetssh/driver"
+	"github.com/ApogeeNetworking/gonetssh/driver"
 	"golang.org/x/crypto/ssh"
 )
 

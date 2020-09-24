@@ -1,8 +1,8 @@
 package cisco
 
 import (
-	"github.com/drkchiloll/gonetssh/driver"
-	"github.com/drkchiloll/gonetssh/universal"
+	"github.com/ApogeeNetworking/gonetssh/driver"
+	"github.com/ApogeeNetworking/gonetssh/universal"
 	"golang.org/x/crypto/ssh"
 )
 

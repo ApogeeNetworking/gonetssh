@@ -38,8 +38,19 @@ func main() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, _ := dev.SendCmd("show ap summary | include core")
-	fmt.Println(res)
+	orgCmds := []string{
+		"ap 6c41.0ec7.cafc",
+		"policy-tag APG_Better-AP-Group",
+		"site-tag Better-AP-Group",
+		"rf-tag \"mga - Default\"",
+	}
+	// orgCmds := []string{
+	// 	"ap 6c41.0ec7.cafc",
+	// 	"policy-tag \"No SSID\"",
+	// 	"rf-tag \"No SSID\"",
+	// 	"site-tag default-site-tag",
+	// }
+	dev.SendConfig(orgCmds)
 }
 
 func aireOS() {

@@ -1,9 +1,9 @@
 package aruba
 
 import (
-	"github.com/drkchiloll/gonetssh/client"
-	"github.com/drkchiloll/gonetssh/driver"
-	"github.com/drkchiloll/gonetssh/universal"
+	"github.com/ApogeeNetworking/gonetssh/client"
+	"github.com/ApogeeNetworking/gonetssh/driver"
+	"github.com/ApogeeNetworking/gonetssh/universal"
 )
 
 // NewDevice ...

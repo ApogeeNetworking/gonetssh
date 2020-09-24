@@ -3,7 +3,7 @@ package driver
 import (
 	"time"
 
-	"github.com/drkchiloll/gonetssh/client"
+	"github.com/ApogeeNetworking/gonetssh/client"
 	"golang.org/x/crypto/ssh"
 )
 

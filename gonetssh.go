@@ -3,12 +3,12 @@ package gonetssh
 import (
 	"strings"
 
-	"github.com/drkchiloll/gonetssh/client"
-	"github.com/drkchiloll/gonetssh/universal"
-	"github.com/drkchiloll/gonetssh/vendors/aruba"
-	"github.com/drkchiloll/gonetssh/vendors/cisco"
-	"github.com/drkchiloll/gonetssh/vendors/dell"
-	"github.com/drkchiloll/gonetssh/vendors/x86"
+	"github.com/ApogeeNetworking/gonetssh/client"
+	"github.com/ApogeeNetworking/gonetssh/universal"
+	"github.com/ApogeeNetworking/gonetssh/vendors/aruba"
+	"github.com/ApogeeNetworking/gonetssh/vendors/cisco"
+	"github.com/ApogeeNetworking/gonetssh/vendors/dell"
+	"github.com/ApogeeNetworking/gonetssh/vendors/x86"
 )
 
 // DeviceType ...

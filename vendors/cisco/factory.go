@@ -16,13 +16,13 @@ func NewDevice(client client.Connectioner, deviceType, enablePass string) (unive
 		DeviceType: deviceType,
 		EnablePass: enablePass,
 	}
-	switch deviceType {
-	case "cisco_ios":
+	switch {
+	case deviceType == "cisco_ios" || deviceType == "cisco_9800":
 		return &IOS{
 			Driver: driver,
 			base:   &base,
 		}, nil
-	case "cisco_aireos":
+	case deviceType == "cisco_aireos":
 		return &AireOS{
 			Driver: driver,
 			base:   &base,

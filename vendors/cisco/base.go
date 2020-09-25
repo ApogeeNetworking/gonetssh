@@ -74,10 +74,13 @@ func (d *BaseDevice) iosPrep() error {
 	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session
 	out, _ := d.SendCmd("terminal len 0")
 	// Check whether or not the Prompt is in Exec Mode #
-	re := regexp.MustCompile(`[[:alnum:]]>.?$`)
-	if re.MatchString(out) {
-		fmt.Println("wasn't in enable mode")
-		d.Driver.ExecEnable(d.EnablePass)
+	switch {
+	// For Cisco Cat 9800 we want in EXEC mode to push configs (potentially)
+	case d.DeviceType == "cisco_9800":
+		re := regexp.MustCompile(`[[:alnum:]]>.?$`)
+		if re.MatchString(out) {
+			d.Driver.ExecEnable(d.EnablePass)
+		}
 	}
 	return nil
 }

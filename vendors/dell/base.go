@@ -1,8 +1,6 @@
 package dell
 
 import (
-	"fmt"
-	"strings"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
@@ -14,8 +12,10 @@ type BaseDevice struct {
 	Driver     driver.Factory
 	DeviceType string
 	prompt     string
-	EnablePass string
+	enablePass string
 	delay      time.Duration
+	user       string
+	pass       string
 }
 
 // Connect ...
@@ -27,6 +27,8 @@ func (d *BaseDevice) Connect(retries int) error {
 	switch d.DeviceType {
 	case "dell_os6":
 		d.delay = 2000 * time.Millisecond
+		return d.os6Prep()
+	case "dell_pc":
 		return d.pcPrep()
 	default:
 		return nil
@@ -43,15 +45,23 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
 }
 
-// iosPrep ...
-func (d *BaseDevice) pcPrep() error {
+// os6Prep OS6 Connect Preparation
+func (d *BaseDevice) os6Prep() error {
 	// Set the terminal length for the session
-	out, _ := d.SendCmd("terminal len 0")
-	if strings.Contains(out, "Unrecognized") {
-		// For PowerConnect 3000 Series Switches
-		out, _ := d.SendCmd("terminal datadump")
-		fmt.Println(out)
-	}
+	d.SendCmd("terminal len 0")
+	return nil
+}
+
+// pcPrep PowerConnect Prepaparation
+func (d *BaseDevice) pcPrep() error {
+	// If Connections was a Success Enter User Name (Prompt being Password)
+	d.Driver.SendCmd(d.user, `Password:`, d.delay)
+	// Provide a slight delay in the processing
+	time.Sleep(100 * time.Millisecond)
+	// Enter Password with normal Prompt
+	d.Driver.SendCmd(d.pass, d.prompt, d.delay)
+	// Enter Terminal Length 0 so that it doesn't have to bother with
+	d.Driver.SendCmd("terminal datadump", d.prompt, d.delay)
 	return nil
 }
 

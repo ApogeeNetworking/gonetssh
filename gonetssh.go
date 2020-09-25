@@ -27,13 +27,14 @@ type dType struct {
 
 // DType represents a driverType DeviceDriver ENUM
 var DType = dType{
-	CiscoIOS:    "cisco_ios",
-	CiscoIOSXE:  "cisco_iosxe",
-	Cisco9800:   "cisco_9800",
-	CiscoAireos: "cisco_aireos",
-	Aruba:       "arubaos_ssh",
-	DellOS6:     "dell_os6",
-	X86:         "x86",
+	CiscoIOS:         "cisco_ios",
+	CiscoIOSXE:       "cisco_iosxe",
+	Cisco9800:        "cisco_9800",
+	CiscoAireos:      "cisco_aireos",
+	Aruba:            "arubaos_ssh",
+	DellOS6:          "dell_os6",
+	DellPowerConnect: "dell_pc",
+	X86:              "x86",
 }
 
 // NewDevice ...
@@ -45,7 +46,7 @@ func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (univ
 	case strings.Contains(string(deviceType), "cisco"):
 		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "dell"):
-		device, err = dell.NewDevice(conn, string(deviceType), enablePass)
+		device, err = dell.NewDevice(conn, user, pass, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "aruba"):
 		device, err = aruba.NewDevice(conn, string(deviceType), enablePass)
 	case strings.Contains(string(deviceType), "x86"):

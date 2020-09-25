@@ -9,15 +9,17 @@ import (
 )
 
 // NewDevice ...
-func NewDevice(conn client.Connectioner, deviceType, enablePass string) (universal.Device, error) {
+func NewDevice(conn client.Connectioner, user, pass, deviceType, enablePass string) (universal.Device, error) {
 	driver := driver.NewDriver(conn)
 	base := BaseDevice{
 		Driver:     driver,
 		DeviceType: deviceType,
-		EnablePass: enablePass,
+		enablePass: enablePass,
+		user:       user,
+		pass:       pass,
 	}
-	switch deviceType {
-	case "dell_os6":
+	switch {
+	case deviceType == "dell_os6" || deviceType == "dell_pc":
 		return &OS6{
 			Driver: driver,
 			base:   &base,

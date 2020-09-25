@@ -29,7 +29,7 @@ func (d *BaseDevice) Connect(retries int) error {
 		d.delay = 2000 * time.Millisecond
 		return d.os6Prep()
 	case "dell_pc":
-		return d.pcPrep()
+		return d.powerConnectPrep()
 	default:
 		return nil
 	}
@@ -53,7 +53,7 @@ func (d *BaseDevice) os6Prep() error {
 }
 
 // pcPrep PowerConnect Prepaparation
-func (d *BaseDevice) pcPrep() error {
+func (d *BaseDevice) powerConnectPrep() error {
 	// If Connections was a Success Enter User Name (Prompt being Password)
 	d.Driver.SendCmd(d.user, `Password:`, d.delay)
 	// Provide a slight delay in the processing

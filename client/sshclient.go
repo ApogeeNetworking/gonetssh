@@ -120,8 +120,8 @@ func (s *SSH) Connect(retries int) error {
 	modes := ssh.TerminalModes{
 		ssh.ECHO:          0, // disable echoing
 		ssh.OCRNL:         0,
-		ssh.TTY_OP_ISPEED: 38400, // input speed = 14.4kbaud
-		ssh.TTY_OP_OSPEED: 38400, // output speed = 14.4kbaud
+		ssh.TTY_OP_ISPEED: 115200, // input speed = 14.4kbaud
+		ssh.TTY_OP_OSPEED: 115200, // output speed = 14.4kbaud
 	}
 	if err := s.session.RequestPty("xterm", 0, 500, modes); err != nil {
 		// Close the Session

@@ -37,19 +37,21 @@ var DType = dType{
 	X86:              "x86",
 }
 
+var contains = strings.Contains
+
 // NewDevice ...
 func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (universal.Device, error) {
 	var device universal.Device
 	var err error
 	conn, _ := client.NewConnection(host, user, pass)
 	switch {
-	case strings.Contains(string(deviceType), "cisco"):
+	case contains(string(deviceType), "cisco"):
 		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
-	case strings.Contains(string(deviceType), "dell"):
+	case contains(string(deviceType), "dell"):
 		device, err = dell.NewDevice(conn, user, pass, string(deviceType), enablePass)
-	case strings.Contains(string(deviceType), "aruba"):
+	case contains(string(deviceType), "aruba"):
 		device, err = aruba.NewDevice(conn, string(deviceType), enablePass)
-	case strings.Contains(string(deviceType), "x86"):
+	case contains(string(deviceType), "x86"):
 		device, err = x86.NewDevice(conn, string(deviceType))
 	}
 	if err != nil {

@@ -3,11 +3,14 @@ package cisco
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
 	"golang.org/x/crypto/ssh"
 )
+
+var contains = strings.Contains
 
 // BaseDevice represent a generic cisco network object
 type BaseDevice struct {
@@ -49,6 +52,16 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 
 // SendConfig ...
 func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	switch {
+	case d.DeviceType == "cisco_aireos":
+		return d.handleAireosConfigs(cmds[0])
+	default:
+		// Currently ONLY Catalyst 9800 WLCs
+		return d.handleIOSConfigs(cmds)
+	}
+}
+
+func (d *BaseDevice) handleIOSConfigs(cmds []string) (string, error) {
 	// Prompt used for any Configure MODE
 	prompt := "[[:alnum:]]\\(\\S+\\)#"
 	// Pre-pend Relevant Configure Terminal and Exit Commands
@@ -67,6 +80,19 @@ func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
 		time.Sleep(d.delay)
 	}
 	return output, nil
+}
+
+func (d *BaseDevice) handleAireosConfigs(cmd string) (string, error) {
+	switch {
+	case contains(cmd, "config ap group") || contains(cmd, "save config"):
+		// Changing the AP's group name will cause the AP to reboot.
+		// Are you sure you want to continue|save? (y/n)
+		prompt := `\(y\/n\)`
+		d.Driver.SendCmd(cmd, prompt, d.delay)
+		return d.Driver.SendCmd("y", d.prompt, d.delay)
+	default:
+		return d.SendCmd(cmd)
+	}
 }
 
 // iosPrep ...
@@ -88,7 +114,6 @@ func (d *BaseDevice) iosPrep() error {
 func (d *BaseDevice) aireosPrep() error {
 	out, _ := d.SendCmd("config paging disable")
 	fmt.Println(out)
-
 	return nil
 }
 

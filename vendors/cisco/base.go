@@ -1,7 +1,6 @@
 package cisco
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 	"time"
@@ -112,8 +111,7 @@ func (d *BaseDevice) iosPrep() error {
 }
 
 func (d *BaseDevice) aireosPrep() error {
-	out, _ := d.SendCmd("config paging disable")
-	fmt.Println(out)
+	d.SendCmd("config paging disable")
 	return nil
 }
 

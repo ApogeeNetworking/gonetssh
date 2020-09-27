@@ -115,12 +115,12 @@ func (d *BaseDevice) aireosPrep() error {
 	return nil
 }
 
-// NewClient ...
+// NewClient not implemented for Cisco Devices
 func (d *BaseDevice) NewClient() (*ssh.Client, error) {
 	return nil, nil
 }
 
-// NewClientConfig ...
+// NewClientConfig not implemented for Cisco Devices
 func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 	return nil
 }

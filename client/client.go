@@ -8,7 +8,6 @@ type Connectioner interface {
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int
-	ExecEnable(pass string)
 	NewClientConfig() *ssh.ClientConfig
 	NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error)
 }

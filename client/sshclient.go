@@ -163,10 +163,3 @@ func (s *SSH) Write(cmd string) int {
 	time.Sleep(100 * time.Millisecond)
 	return n
 }
-
-// ExecEnable ...
-func (s *SSH) ExecEnable(pass string) {
-	s.writer.Write([]byte("enable\n"))
-	time.Sleep(100 * time.Millisecond)
-	s.writer.Write([]byte(pass + "\n"))
-}

@@ -59,8 +59,8 @@ func (d *Driver) ReadUntil(regex string) (string, error) {
 	}
 }
 
-func (d *Driver) read(regex string, buf chan *string, stop chan struct{}) {
-	re := regexp.MustCompile(regex)
+func (d *Driver) read(prompt string, buf chan *string, stop chan struct{}) {
+	re := regexp.MustCompile(prompt)
 	var input string
 	for {
 		output, err := d.Connection.Read()
@@ -79,11 +79,6 @@ func (d *Driver) read(regex string, buf chan *string, stop chan struct{}) {
 		buf <- nil
 	}
 	buf <- &input
-}
-
-// ExecEnable ...
-func (d *Driver) ExecEnable(pass string) {
-	d.Connection.ExecEnable(pass)
 }
 
 // NewClientConfig ...

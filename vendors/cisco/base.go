@@ -25,12 +25,12 @@ func (d *BaseDevice) Connect(retries int) error {
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
-	switch d.DeviceType {
-	case "cisco_ios":
+	switch {
+	case d.DeviceType == "cisco_ios" || d.DeviceType == "cisco_9800":
 		d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
 		d.delay = 250 * time.Millisecond
 		return d.iosPrep()
-	case "cisco_aireos":
+	case d.DeviceType == "cisco_aireos":
 		d.prompt = `\s>.?$`
 		d.delay = 500 * time.Millisecond
 		return d.aireosPrep()
@@ -96,6 +96,9 @@ func (d *BaseDevice) handleAireosConfigs(cmd string) (string, error) {
 
 // iosPrep ...
 func (d *BaseDevice) iosPrep() error {
+	// If Device Always goes into EXEC Mode
+	// Test By Sending the disable cmd here
+	// d.SendCmd("disable")
 	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session
 	out, _ := d.SendCmd("terminal len 0")
 	// Check whether or not the Prompt is in Exec Mode #
@@ -104,7 +107,11 @@ func (d *BaseDevice) iosPrep() error {
 	case d.DeviceType == "cisco_9800":
 		re := regexp.MustCompile(`[[:alnum:]]>.?$`)
 		if re.MatchString(out) {
-			d.Driver.ExecEnable(d.EnablePass)
+			prompt := `Password:\s`
+			_, _ = d.Driver.SendCmd("enable", prompt, d.delay)
+			// For Debugging It Might be useful to make the _ = out
+			_, _ = d.Driver.SendCmd(d.EnablePass, d.prompt, d.delay)
+			// For Debugging It Might be useful to make the _ = out
 		}
 	}
 	return nil

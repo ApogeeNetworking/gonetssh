@@ -13,7 +13,6 @@ type Factory interface {
 	Disconnect()
 	SendCmd(cmd, prompt string, delay time.Duration) (string, error)
 	ReadUntil(prompt string) (string, error)
-	ExecEnable(enablePass string)
 	NewClientConfig() *ssh.ClientConfig
 	NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error)
 }

@@ -1,7 +1,6 @@
 package aruba
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
@@ -23,8 +22,8 @@ func (d *BaseDevice) Connect(retries int) error {
 		return err
 	}
 	d.prompt = `\)\s#.?$`
-	d.delay = 250 * time.Millisecond
-	return d.sessionPrep()
+	d.delay = 100 * time.Millisecond
+	return d.arubaPrep()
 }
 
 // Disconnect ...
@@ -39,21 +38,30 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 
 // SendConfig ...
 func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
-	return "", nil
+	// Prompt used for Configure MODE
+	var output string
+	for _, cmd := range cmds {
+		out, _ := d.Driver.SendCmd(cmd, d.prompt, d.delay)
+		output += out
+		time.Sleep(100 * time.Millisecond)
+	}
+	return output, nil
 }
 
-// iosPrep ...
-func (d *BaseDevice) sessionPrep() error {
-	d.Driver.ExecEnable(d.EnablePass)
+// arubaPrep in order to do anything useful on the Aruba CLI
+// you must enter EXEC Mode by issuing the enable command
+// once in EXEC mode the no paging command is entered in order
+// to get all data from command on issuance (MINUS --More-- keyword)
+func (d *BaseDevice) arubaPrep() error {
+	// Temporary Enable Password Prompt
+	prompt := "Password:"
+	// Enter Enable Command; the Prompt will be Password:
+	d.Driver.SendCmd("enable", prompt, d.delay)
+	// Enter Enable Password as CMD (as that's what the input really is)
+	// Change the Prompt Back to (controller) # = d.prompt
+	d.Driver.SendCmd(d.EnablePass, d.prompt, d.delay)
 	// set the terminal length for the session
 	d.SendCmd("no paging")
-	return nil
-}
-
-func (d *BaseDevice) aireosPrep() error {
-	out, _ := d.SendCmd("config paging disable")
-	fmt.Println(out)
-
 	return nil
 }
 

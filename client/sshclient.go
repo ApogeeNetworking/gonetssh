@@ -44,7 +44,6 @@ type SSH struct {
 	prompt  string
 	reader  io.Reader
 	writer  io.WriteCloser
-	Enable  string
 }
 
 // NewSSH ...
@@ -152,7 +151,7 @@ func (s *SSH) Disconnect() {
 
 // Read ...
 func (s *SSH) Read() (string, error) {
-	buf := make([]byte, 204800000)
+	buf := make([]byte, 2048)
 	n, err := s.reader.Read(buf)
 	return string(buf[:n]), err
 }

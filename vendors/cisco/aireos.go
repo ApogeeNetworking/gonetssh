@@ -9,7 +9,7 @@ import (
 // AireOS ...
 type AireOS struct {
 	Driver driver.Factory
-	Prompt string
+	prompt string
 	base   universal.Device
 }
 

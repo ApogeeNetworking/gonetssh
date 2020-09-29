@@ -19,13 +19,16 @@ func NewDevice(client client.Connectioner, deviceType, enablePass string) (unive
 	switch {
 	case deviceType == "cisco_ios" || deviceType == "cisco_9800":
 		return &IOS{
-			Driver: driver,
-			base:   &base,
+			Driver:     driver,
+			base:       &base,
+			deviceType: deviceType,
+			prompt:     "[[:alnum:]]>.?$|[[:alnum:]]#.?$",
 		}, nil
 	case deviceType == "cisco_aireos":
 		return &AireOS{
 			Driver: driver,
 			base:   &base,
+			prompt: `\s>.?$`,
 		}, nil
 	default:
 		return nil, fmt.Errorf("unsupported device type: %s", deviceType)

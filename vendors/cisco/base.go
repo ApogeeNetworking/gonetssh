@@ -83,8 +83,11 @@ func (d *BaseDevice) handleIOSConfigs(cmds []string) (string, error) {
 
 func (d *BaseDevice) handleAireosConfigs(cmd string) (string, error) {
 	switch {
-	case contains(cmd, "config ap group") || contains(cmd, "save config"):
+	case contains(cmd, "config ap group") ||
+		contains(cmd, "clear ap config") ||
+		contains(cmd, "save config"):
 		// Changing the AP's group name will cause the AP to reboot.
+		// Clearing an AP's config (factory reset) causes Reboot of course.
 		// Are you sure you want to continue|save? (y/n)
 		prompt := `\(y\/n\)`
 		d.Driver.SendCmd(cmd, prompt, d.delay)

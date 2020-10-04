@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/drkchiloll/gonetssh"
+	"github.com/ApogeeNetworking/gonetssh"
 	"github.com/pkg/sftp"
 	"github.com/subosito/gotenv"
 )
@@ -27,7 +27,7 @@ func main() {
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetssh.DType.CiscoIOS,
+		gonetssh.DType.Cisco9800,
 	)
 	if err != nil {
 		// Device Type Not Supported
@@ -38,19 +38,11 @@ func main() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	orgCmds := []string{
-		"ap 6c41.0ec7.cafc",
-		"policy-tag APG_Better-AP-Group",
-		"site-tag Better-AP-Group",
-		"rf-tag \"mga - Default\"",
-	}
-	// orgCmds := []string{
-	// 	"ap 6c41.0ec7.cafc",
-	// 	"policy-tag \"No SSID\"",
-	// 	"rf-tag \"No SSID\"",
-	// 	"site-tag default-site-tag",
-	// }
-	dev.SendConfig(orgCmds)
+	out, _ := dev.SendCmd("show run")
+	fmt.Println(out)
+	fmt.Println("running it again")
+	out, _ = dev.SendCmd("show run")
+	fmt.Println(out)
 }
 
 func aireOS() {
@@ -66,11 +58,10 @@ func aireOS() {
 		log.Fatalf("%v", err)
 	}
 	defer dev.Disconnect()
-	res, err := dev.SendCmd("show ap inventory all")
-	if err != nil {
-		log.Fatalf("%v", err)
+	cmds := []string{
+		"save config",
 	}
-	fmt.Println(res)
+	dev.SendConfig(cmds)
 }
 
 func sftpUploadFileExample() {
@@ -81,8 +72,8 @@ func sftpUploadFileExample() {
 		enablePass,
 		gonetssh.DType.X86,
 	)
-	dev.NewClientConfig()
-	sshClient, err := dev.NewClient()
+	sshCfg := dev.NewClientConfig()
+	sshClient, err := dev.NewClient(sshCfg)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

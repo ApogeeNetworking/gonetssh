@@ -34,7 +34,7 @@ func (d *AireOS) NewClientConfig() *ssh.ClientConfig {
 }
 
 // NewClient ...
-func (d *AireOS) NewClient() (*ssh.Client, error) {
+func (d *AireOS) NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error) {
 	return nil, nil
 }
 

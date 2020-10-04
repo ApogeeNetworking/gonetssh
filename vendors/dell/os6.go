@@ -34,7 +34,7 @@ func (dev OS6) NewClientConfig() *ssh.ClientConfig {
 }
 
 // NewClient ...
-func (dev OS6) NewClient() (*ssh.Client, error) {
+func (dev OS6) NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error) {
 	return nil, nil
 }
 

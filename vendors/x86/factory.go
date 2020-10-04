@@ -10,9 +10,8 @@ import (
 func NewDevice(cl client.Connectioner, deviceType string) (universal.Device, error) {
 	driver := driver.NewDriver(cl)
 	base := BaseDevice{
-		Driver:       driver,
-		DeviceType:   deviceType,
-		SSHClientCfg: driver.NewClientConfig(),
+		Driver:     driver,
+		DeviceType: deviceType,
 	}
 	return &PizzaBox{
 		Driver: driver,

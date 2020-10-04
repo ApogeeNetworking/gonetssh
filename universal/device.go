@@ -9,5 +9,5 @@ type Device interface {
 	SendCmd(cmd string) (string, error)
 	SendConfig(cmds []string) (string, error)
 	NewClientConfig() *ssh.ClientConfig
-	NewClient() (*ssh.Client, error)
+	NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error)
 }

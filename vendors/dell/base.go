@@ -66,7 +66,7 @@ func (d *BaseDevice) powerConnectPrep() error {
 }
 
 // NewClient ...
-func (d *BaseDevice) NewClient() (*ssh.Client, error) {
+func (d *BaseDevice) NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error) {
 	return nil, nil
 }
 

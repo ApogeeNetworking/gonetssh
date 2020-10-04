@@ -126,7 +126,7 @@ func (d *BaseDevice) aireosPrep() error {
 }
 
 // NewClient not implemented for Cisco Devices
-func (d *BaseDevice) NewClient() (*ssh.Client, error) {
+func (d *BaseDevice) NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error) {
 	return nil, nil
 }
 

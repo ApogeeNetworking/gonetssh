@@ -29,8 +29,8 @@ func (d *PizzaBox) SendCmd(cmd string) (string, error) {
 }
 
 // NewClient ...
-func (d *PizzaBox) NewClient() (*ssh.Client, error) {
-	return d.base.NewClient()
+func (d *PizzaBox) NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error) {
+	return d.base.NewClient(sshCfg)
 }
 
 // NewClientConfig ...

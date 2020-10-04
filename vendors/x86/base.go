@@ -30,18 +30,18 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 	return "", nil
 }
 
+// SendConfig ...
+func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	// THIS IS NOT IMPLEMENTED IN X86 SYS FOR OBV REASONS
+	return "", nil
+}
+
 // NewClientConfig ...
 func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 	return d.Driver.NewClientConfig()
 }
 
 // NewClient ...
-func (d *BaseDevice) NewClient() (*ssh.Client, error) {
-	return d.Driver.NewClient(d.SSHClientCfg)
-}
-
-// SendConfig ...
-func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
-	// THIS IS NOT IMPLEMENTED IN X86 SYS FOR OBV REASONS
-	return "", nil
+func (d *BaseDevice) NewClient(sshCfg *ssh.ClientConfig) (*ssh.Client, error) {
+	return d.Driver.NewClient(sshCfg)
 }

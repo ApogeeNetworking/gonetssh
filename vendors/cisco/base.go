@@ -85,13 +85,19 @@ func (d *BaseDevice) handleAireosConfigs(cmd string) (string, error) {
 	switch {
 	case contains(cmd, "config ap group") ||
 		contains(cmd, "clear ap config") ||
+		contains(cmd, "config ap reset") ||
 		contains(cmd, "save config"):
+		var output string
 		// Changing the AP's group name will cause the AP to reboot.
 		// Clearing an AP's config (factory reset) causes Reboot of course.
+		// AP Resets cause the AP to reboot
 		// Are you sure you want to continue|save? (y/n)
 		prompt := `\(y\/n\)`
-		d.Driver.SendCmd(cmd, prompt, d.delay)
-		return d.Driver.SendCmd("y", d.prompt, d.delay)
+		out, _ := d.Driver.SendCmd(cmd, prompt, d.delay)
+		output = out
+		out, _ = d.Driver.SendCmd("y", d.prompt, d.delay)
+		output += out
+		return output, nil
 	default:
 		return d.SendCmd(cmd)
 	}
@@ -99,9 +105,6 @@ func (d *BaseDevice) handleAireosConfigs(cmd string) (string, error) {
 
 // iosPrep ...
 func (d *BaseDevice) iosPrep() error {
-	// If Device Always goes into EXEC Mode
-	// Test By Sending the disable cmd here
-	// d.SendCmd("disable")
 	// On Cisco_IOS and Cisco_IOSXE set the terminal length for the session
 	out, _ := d.SendCmd("terminal len 0")
 	// Check whether or not the Prompt is in Exec Mode #

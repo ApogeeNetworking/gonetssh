@@ -32,35 +32,32 @@ var (
 	}
 )
 
-// SSH ...
-type SSH struct {
+// SSHConn ...
+type SSHConn struct {
 	host    string
 	user    string
 	pass    string
 	client  *ssh.Client
 	session *ssh.Session
-	input   chan *string
-	stop    chan struct{}
-	prompt  string
 	reader  io.Reader
 	writer  io.WriteCloser
 }
 
-// NewSSH ...
-func NewSSH(host, user, pass string) (*SSH, error) {
-	return &SSH{
+// NewSSHConn ...
+func NewSSHConn(host, user, pass string) *SSHConn {
+	return &SSHConn{
 		host: host,
 		user: user,
 		pass: pass,
-	}, nil
+	}
 }
 
 // NewClient connects ssh client
-func (s *SSH) NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error) {
+func (s *SSHConn) NewClient(cfg *ssh.ClientConfig) (*ssh.Client, error) {
 	return ssh.Dial("tcp", s.host+":22", cfg)
 }
 
-func (s *SSH) keyInter(u, in string, q []string, e []bool) ([]string, error) {
+func (s *SSHConn) keyInter(u, in string, q []string, e []bool) ([]string, error) {
 	// Just send the password back for all questions
 	answers := make([]string, len(q))
 	for i := range answers {
@@ -70,12 +67,12 @@ func (s *SSH) keyInter(u, in string, q []string, e []bool) ([]string, error) {
 	return answers, nil
 }
 
-func (s *SSH) getPassword() (string, error) {
+func (s *SSHConn) getPassword() (string, error) {
 	return s.pass, nil
 }
 
 // NewClientConfig setups an ssh client config struct
-func (s *SSH) NewClientConfig() *ssh.ClientConfig {
+func (s *SSHConn) NewClientConfig() *ssh.ClientConfig {
 	return &ssh.ClientConfig{
 		User: s.user,
 		Auth: []ssh.AuthMethod{
@@ -89,7 +86,7 @@ func (s *SSH) NewClientConfig() *ssh.ClientConfig {
 }
 
 // Connect establishes socket with Device with retries
-func (s *SSH) Connect(retries int) error {
+func (s *SSHConn) Connect(retries int) error {
 	cfg := s.NewClientConfig()
 	// Attach Additional Ciphers and KeyExchanges
 	cfg.Ciphers = append(cfg.Ciphers, sshCiphers...)
@@ -140,7 +137,7 @@ func (s *SSH) Connect(retries int) error {
 }
 
 // Disconnect ...
-func (s *SSH) Disconnect() {
+func (s *SSHConn) Disconnect() {
 	if s.client != nil {
 		s.client.Conn.Close()
 	}
@@ -150,14 +147,14 @@ func (s *SSH) Disconnect() {
 }
 
 // Read ...
-func (s *SSH) Read() (string, error) {
+func (s *SSHConn) Read() (string, error) {
 	buf := make([]byte, 2048)
 	n, err := s.reader.Read(buf)
 	return string(buf[:n]), err
 }
 
 // Write ...
-func (s *SSH) Write(cmd string) int {
+func (s *SSHConn) Write(cmd string) int {
 	n, _ := s.writer.Write([]byte(cmd))
 	time.Sleep(100 * time.Millisecond)
 	return n

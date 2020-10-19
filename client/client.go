@@ -14,9 +14,6 @@ type Connectioner interface {
 
 // NewConnection instantiate an SSHConn that implements Connection
 func NewConnection(host, user, pass string) (Connectioner, error) {
-	c, err := NewSSH(host, user, pass)
-	if err != nil {
-		return nil, err
-	}
+	c := NewSSHConn(host, user, pass)
 	return c, nil
 }

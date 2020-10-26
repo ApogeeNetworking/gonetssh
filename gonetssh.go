@@ -8,6 +8,7 @@ import (
 	"github.com/ApogeeNetworking/gonetssh/vendors/aruba"
 	"github.com/ApogeeNetworking/gonetssh/vendors/cisco"
 	"github.com/ApogeeNetworking/gonetssh/vendors/dell"
+	"github.com/ApogeeNetworking/gonetssh/vendors/hp"
 	"github.com/ApogeeNetworking/gonetssh/vendors/x86"
 )
 
@@ -20,6 +21,7 @@ type dType struct {
 	CiscoIOSXE       DeviceType
 	CiscoAireos      DeviceType
 	Aruba            DeviceType
+	HPProcurve       DeviceType
 	DellOS6          DeviceType
 	DellPowerConnect DeviceType
 	X86              DeviceType
@@ -32,6 +34,7 @@ var DType = dType{
 	Cisco9800:        "cisco_9800",
 	CiscoAireos:      "cisco_aireos",
 	Aruba:            "arubaos_ssh",
+	HPProcurve:       "hp_procurve",
 	DellOS6:          "dell_os6",
 	DellPowerConnect: "dell_pc",
 	X86:              "x86",
@@ -51,6 +54,8 @@ func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (univ
 		device, err = dell.NewDevice(conn, user, pass, string(deviceType), enablePass)
 	case contains(string(deviceType), "aruba"):
 		device, err = aruba.NewDevice(conn, string(deviceType), enablePass)
+	case contains(string(deviceType), "hp"):
+		device, err = hp.NewDevice(conn, string(deviceType), enablePass)
 	case contains(string(deviceType), "x86"):
 		device, err = x86.NewDevice(conn, string(deviceType))
 	}

@@ -9,9 +9,27 @@ Gonetssh is a `Golang` based multi-vendor library to simplify SSH Connections to
 * Cisco NX-OS
 * Cisco AireOS WLC
 * ArubaOS 6.x WLC
+* HP Procurve
 * Dell OS6
 * Dell PowerConnect
 * X86 (SFTP Ops)
+
+Module uses an **"enumerator"** type for supported devices
+
+```go
+// DType represents a driverType DeviceDriver ENUM
+var DType = dType{
+	CiscoIOS:         "cisco_ios",
+	CiscoIOSXE:       "cisco_iosxe",
+	Cisco9800:        "cisco_9800",
+	CiscoAireos:      "cisco_aireos",
+	Aruba:            "arubaos_ssh",
+	HPProcurve:       "hp_procurve",
+	DellOS6:          "dell_os6",
+	DellPowerConnect: "dell_pc",
+	X86:              "x86",
+}
+```
 
 ## Install
 

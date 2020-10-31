@@ -156,6 +156,5 @@ func (s *SSHConn) Read() (string, error) {
 // Write ...
 func (s *SSHConn) Write(cmd string) int {
 	n, _ := s.writer.Write([]byte(cmd))
-	time.Sleep(100 * time.Millisecond)
 	return n
 }

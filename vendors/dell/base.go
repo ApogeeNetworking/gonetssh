@@ -24,9 +24,9 @@ func (d *BaseDevice) Connect(retries int) error {
 		return err
 	}
 	d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
+	d.delay = 250 * time.Millisecond
 	switch d.DeviceType {
 	case "dell_os6":
-		d.delay = 2000 * time.Millisecond
 		return d.os6Prep()
 	case "dell_pc":
 		return d.powerConnectPrep()
@@ -56,8 +56,6 @@ func (d *BaseDevice) os6Prep() error {
 func (d *BaseDevice) powerConnectPrep() error {
 	// If Connections was a Success Enter User Name (Prompt being Password)
 	d.Driver.SendCmd(d.user, `Password:`, d.delay)
-	// Provide a slight delay in the processing
-	time.Sleep(100 * time.Millisecond)
 	// Enter Password with normal Prompt
 	d.Driver.SendCmd(d.pass, d.prompt, d.delay)
 	// Enter Terminal Length 0 so that it doesn't have to bother with

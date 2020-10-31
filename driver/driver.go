@@ -25,9 +25,10 @@ func (d *Driver) Disconnect() {
 }
 
 // SendCmd ...
-func (d *Driver) SendCmd(cmd, pattern string, dur time.Duration) (string, error) {
+func (d *Driver) SendCmd(cmd, prompt string, delay time.Duration) (string, error) {
 	d.Connection.Write(cmd + "\n")
-	return d.ReadUntil(pattern)
+	time.Sleep(delay)
+	return d.ReadUntil(prompt)
 }
 
 // ReadUntil ...

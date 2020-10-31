@@ -28,11 +28,11 @@ func (d *BaseDevice) Connect(retries int) error {
 	switch {
 	case d.DeviceType == "cisco_ios" || d.DeviceType == "cisco_9800":
 		d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$"
-		d.delay = 250 * time.Millisecond
+		d.delay = 100 * time.Millisecond
 		return d.iosPrep()
 	case d.DeviceType == "cisco_aireos":
 		d.prompt = `\s>.?$`
-		d.delay = 500 * time.Millisecond
+		d.delay = 100 * time.Millisecond
 		return d.aireosPrep()
 	default:
 		return nil

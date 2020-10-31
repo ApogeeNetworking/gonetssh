@@ -22,7 +22,7 @@ func (d *BaseDevice) Connect(retries int) error {
 		return err
 	}
 	d.prompt = `\)\s#.?$`
-	d.delay = 100 * time.Millisecond
+	d.delay = 1000 * time.Millisecond
 	return d.arubaPrep()
 }
 
@@ -43,7 +43,6 @@ func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
 	for _, cmd := range cmds {
 		out, _ := d.Driver.SendCmd(cmd, d.prompt, d.delay)
 		output += out
-		time.Sleep(100 * time.Millisecond)
 	}
 	return output, nil
 }

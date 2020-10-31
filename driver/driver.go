@@ -27,7 +27,7 @@ func (d *Driver) Disconnect() {
 // SendCmd ...
 func (d *Driver) SendCmd(cmd, prompt string, delay time.Duration) (string, error) {
 	d.Connection.Write(cmd + "\n")
-	time.Sleep(delay)
+	// time.Sleep(delay)
 	return d.ReadUntil(prompt)
 }
 

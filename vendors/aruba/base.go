@@ -1,7 +1,6 @@
 package aruba
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
@@ -19,7 +18,6 @@ type BaseDevice struct {
 
 // Connect ...
 func (d *BaseDevice) Connect(retries int) error {
-	fmt.Println(d.DeviceType)
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}

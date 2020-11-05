@@ -20,7 +20,8 @@ type dType struct {
 	Cisco9800        DeviceType
 	CiscoIOSXE       DeviceType
 	CiscoAireos      DeviceType
-	Aruba            DeviceType
+	Aruba6           DeviceType
+	Aruba8           DeviceType
 	HPProcurve       DeviceType
 	DellOS6          DeviceType
 	DellPowerConnect DeviceType
@@ -33,7 +34,8 @@ var DType = dType{
 	CiscoIOSXE:       "cisco_iosxe",
 	Cisco9800:        "cisco_9800",
 	CiscoAireos:      "cisco_aireos",
-	Aruba:            "arubaos_ssh",
+	Aruba6:           "aruba6_ssh",
+	Aruba8:           "aruba8_ssh",
 	HPProcurve:       "hp_procurve",
 	DellOS6:          "dell_os6",
 	DellPowerConnect: "dell_pc",

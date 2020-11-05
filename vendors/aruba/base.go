@@ -1,6 +1,7 @@
 package aruba
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/ApogeeNetworking/gonetssh/driver"
@@ -18,10 +19,16 @@ type BaseDevice struct {
 
 // Connect ...
 func (d *BaseDevice) Connect(retries int) error {
+	fmt.Println(d.DeviceType)
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
-	d.prompt = `\)\s#.?$`
+	switch d.DeviceType {
+	case "aruba6_ssh":
+		d.prompt = `\)\s#.?$`
+	case "aruba8_ssh":
+		d.prompt = `\)\s\*#.?$`
+	}
 	d.delay = 1000 * time.Millisecond
 	return d.arubaPrep()
 }
@@ -52,13 +59,15 @@ func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
 // once in EXEC mode the no paging command is entered in order
 // to get all data from command on issuance (MINUS --More-- keyword)
 func (d *BaseDevice) arubaPrep() error {
-	// Temporary Enable Password Prompt
-	prompt := "Password:"
-	// Enter Enable Command; the Prompt will be Password:
-	d.Driver.SendCmd("enable", prompt, d.delay)
-	// Enter Enable Password as CMD (as that's what the input really is)
-	// Change the Prompt Back to (controller) # = d.prompt
-	d.Driver.SendCmd(d.EnablePass, d.prompt, d.delay)
+	if d.DeviceType == "aruba6_ssh" {
+		// Temporary Enable Password Prompt
+		prompt := "Password:"
+		// Enter Enable Command; the Prompt will be Password:
+		d.Driver.SendCmd("enable", prompt, d.delay)
+		// Enter Enable Password as CMD (as that's what the input really is)
+		// Change the Prompt Back to (controller) # = d.prompt
+		d.Driver.SendCmd(d.EnablePass, d.prompt, d.delay)
+	}
 	// set the terminal length for the session
 	d.SendCmd("no paging")
 	return nil

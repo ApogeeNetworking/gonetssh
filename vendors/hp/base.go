@@ -24,7 +24,7 @@ func (d *BaseDevice) Connect(retries int) error {
 	d.delay = 100 * time.Millisecond
 	switch {
 	case d.DeviceType == "hp_procurve":
-		d.prompt = "[[:alnum:]]#"
+		d.prompt = "[[:alnum:]](#|>)"
 		d.Driver.SendCmd("\n", d.prompt, d.delay)
 		d.Driver.SendCmd("no page", d.prompt, d.delay)
 		return nil

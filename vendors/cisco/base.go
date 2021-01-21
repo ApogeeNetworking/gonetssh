@@ -60,7 +60,7 @@ func (d *BaseDevice) SendCmd(cmd string) (string, error) {
 // SendConfig ...
 func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
 	switch {
-	case d.DeviceType == "cisco_aireos":
+	case d.DeviceType == "cisco_aireos" || d.DeviceType == "cisco_aireos_old":
 		return d.handleAireosConfigs(cmds[0])
 	default:
 		// Currently ONLY Catalyst 9800 WLCs

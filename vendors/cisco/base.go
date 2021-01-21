@@ -16,6 +16,8 @@ type BaseDevice struct {
 	Driver     driver.Factory
 	DeviceType string
 	prompt     string
+	User       string
+	Pass       string
 	EnablePass string
 	delay      time.Duration
 }
@@ -33,6 +35,12 @@ func (d *BaseDevice) Connect(retries int) error {
 	case d.DeviceType == "cisco_aireos":
 		d.prompt = `\s>.?$`
 		d.delay = 100 * time.Millisecond
+		return d.aireosPrep()
+	case d.DeviceType == "cisco_aireos_old":
+		d.prompt = `\s>.?$`
+		d.delay = 100 * time.Millisecond
+		d.Driver.SendCmd(d.User, `Password:`, d.delay)
+		d.Driver.SendCmd(d.Pass, d.prompt, d.delay)
 		return d.aireosPrep()
 	default:
 		return nil
@@ -125,6 +133,12 @@ func (d *BaseDevice) iosPrep() error {
 
 func (d *BaseDevice) aireosPrep() error {
 	d.SendCmd("config paging disable")
+	return nil
+}
+
+func (d *BaseDevice) aireosOldPrep() error {
+	d.Driver.SendCmd(d.User, `Password:`, d.delay)
+	d.Driver.SendCmd(d.Pass, d.prompt, d.delay)
 	return nil
 }
 

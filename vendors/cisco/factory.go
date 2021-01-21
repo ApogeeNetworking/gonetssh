@@ -9,11 +9,13 @@ import (
 )
 
 // NewDevice ...
-func NewDevice(client client.Connectioner, deviceType, enablePass string) (universal.Device, error) {
+func NewDevice(client client.Connectioner, user, pass, deviceType, enablePass string) (universal.Device, error) {
 	driver := driver.NewDriver(client)
 	base := BaseDevice{
 		Driver:     driver,
 		DeviceType: deviceType,
+		User:       user,
+		Pass:       pass,
 		EnablePass: enablePass,
 	}
 	switch {
@@ -24,7 +26,7 @@ func NewDevice(client client.Connectioner, deviceType, enablePass string) (unive
 			deviceType: deviceType,
 			prompt:     "[[:alnum:]]>.?$|[[:alnum:]]#.?$",
 		}, nil
-	case deviceType == "cisco_aireos":
+	case deviceType == "cisco_aireos" || deviceType == "cisco_aireos_old":
 		return &AireOS{
 			Driver: driver,
 			base:   &base,

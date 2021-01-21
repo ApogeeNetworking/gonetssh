@@ -20,6 +20,7 @@ type dType struct {
 	Cisco9800        DeviceType
 	CiscoIOSXE       DeviceType
 	CiscoAireos      DeviceType
+	CiscoAireosOld   DeviceType
 	Aruba6           DeviceType
 	Aruba8           DeviceType
 	HPProcurve       DeviceType
@@ -34,6 +35,7 @@ var DType = dType{
 	CiscoIOSXE:       "cisco_iosxe",
 	Cisco9800:        "cisco_9800",
 	CiscoAireos:      "cisco_aireos",
+	CiscoAireosOld:   "cisco_aireos_old",
 	Aruba6:           "aruba6_ssh",
 	Aruba8:           "aruba8_ssh",
 	HPProcurve:       "hp_procurve",
@@ -51,7 +53,7 @@ func NewDevice(host, user, pass, enablePass string, deviceType DeviceType) (univ
 	conn, _ := client.NewConnection(host, user, pass)
 	switch {
 	case contains(string(deviceType), "cisco"):
-		device, err = cisco.NewDevice(conn, string(deviceType), enablePass)
+		device, err = cisco.NewDevice(conn, user, pass, string(deviceType), enablePass)
 	case contains(string(deviceType), "dell"):
 		device, err = dell.NewDevice(conn, user, pass, string(deviceType), enablePass)
 	case contains(string(deviceType), "aruba"):

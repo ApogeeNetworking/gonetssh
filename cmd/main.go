@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -26,23 +25,19 @@ func trimWS(text string) string {
 }
 
 func main() {
-	dev, err := gonetssh.NewDevice(
+	device, err := gonetssh.NewDevice(
 		sshHost,
 		sshUser,
 		sshPass,
 		enablePass,
-		gonetssh.DType.Aruba8,
+		gonetssh.DType.DellOS6,
 	)
 	if err != nil {
-		// Device Type Not Supported
 		log.Fatalf("%v", err)
 	}
-	err = dev.Connect(10)
+	err = device.Connect(20)
 	if err != nil {
-		log.Fatalf("%v", err)
+		log.Fatal(err)
 	}
-	defer dev.Disconnect()
-
-	out, _ := dev.SendCmd("show configuration effective | include essid")
-	fmt.Println(out)
+	defer device.Disconnect()
 }

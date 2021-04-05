@@ -23,7 +23,7 @@ func (d *BaseDevice) Connect(retries int) error {
 	if err := d.Driver.Connect(retries); err != nil {
 		return err
 	}
-	d.prompt = "[[:alnum:]]>.?$|[[:alnum:]]#.?$|[[:alnum:]]\\$.?$"
+	d.prompt = "\\S+>.?$|\\S+#.?$"
 	d.delay = 250 * time.Millisecond
 	switch d.DeviceType {
 	case "dell_os6":
@@ -55,10 +55,11 @@ func (d *BaseDevice) os6Prep() error {
 // pcPrep PowerConnect Prepaparation
 func (d *BaseDevice) powerConnectPrep() error {
 	// If Connections was a Success Enter User Name (Prompt being Password)
-	d.Driver.SendCmd(d.user, `Password:`, d.delay)
+	// out, _ := d.Driver.SendCmd(d.user, `User\s+Name:|Password:`, d.delay)
+	d.Driver.SendCmd(d.user, `User\s+Name:`, d.delay)
 	// Enter Password with normal Prompt
-	d.Driver.SendCmd(d.pass, d.prompt, d.delay)
-	// Enter Terminal Length 0 so that it doesn't have to bother with
+	d.Driver.SendCmd(d.pass, `.*`, d.delay)
+	// // Enter Terminal Length 0 so that it doesn't have to bother with
 	d.Driver.SendCmd("terminal datadump", d.prompt, d.delay)
 	return nil
 }

@@ -96,7 +96,7 @@ func (s *SSHConn) Connect(retries int) error {
 		// Before we give up on a failed handshake
 		if strings.Contains(err.Error(), "handshake") {
 			count := retries - 1
-			if count == 0 {
+			if count <= 0 {
 				return fmt.Errorf("all ssh conn retries exhausted: %v", err)
 			}
 			return s.Connect(count)

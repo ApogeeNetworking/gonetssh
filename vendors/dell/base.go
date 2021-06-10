@@ -42,6 +42,11 @@ func (d *BaseDevice) Disconnect() {
 
 // SendCmd ...
 func (d *BaseDevice) SendCmd(cmd string) (string, error) {
+	if cmd == "wr" {
+		customPrmpt := `Are\s+you\s+sure\syou\s+want\s+to\s+save\?\s+\(y\/n\)\s+`
+		d.Driver.SendCmd(cmd, customPrmpt, d.delay)
+		cmd = "y"
+	}
 	return d.Driver.SendCmd(cmd, d.prompt, d.delay)
 }
 
@@ -76,9 +81,11 @@ func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 
 // SendConfig ...
 func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	var results string
 	for _, cmd := range cmds {
-		d.SendCmd(cmd)
+		out, _ := d.SendCmd(cmd)
 		time.Sleep(500 * time.Millisecond)
+		results += out
 	}
-	return "", nil
+	return results, nil
 }

@@ -75,7 +75,10 @@ func (d *BaseDevice) NewClientConfig() *ssh.ClientConfig {
 }
 
 // SendConfig ...
-func (d *BaseDevice) SendConfig(cmd []string) (string, error) {
-	// NOT IMPLEMENTED FOR DELL SWITCHES ET AL
+func (d *BaseDevice) SendConfig(cmds []string) (string, error) {
+	for _, cmd := range cmds {
+		d.SendCmd(cmd)
+		time.Sleep(500 * time.Millisecond)
+	}
 	return "", nil
 }

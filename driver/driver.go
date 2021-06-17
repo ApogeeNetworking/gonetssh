@@ -53,7 +53,7 @@ func (d *Driver) ReadUntil(regex string) (string, error) {
 			fmt.Println(<-stop)
 			d.Disconnect()
 			return "", fmt.Errorf("EOF: %v", <-stop)
-		case <-time.After(time.Second * time.Duration(60)):
+		case <-time.After(60 * time.Second):
 			d.Connection.Disconnect()
 			return "", fmt.Errorf("timeout")
 		}
